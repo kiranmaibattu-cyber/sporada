@@ -47,7 +47,7 @@ Published image:
 
 ```text
 ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14
-ghcr.io/kiranmaibattu-cyber/sporada@sha256:292645ce6e7faa562e4fedbdb75f94ff9c1244fd175d07723dfa453199b82b86
+ghcr.io/kiranmaibattu-cyber/sporada@sha256:66db0d8ec2216cb04e303b330d01f2295645cc333f9b5c5364d14aed61ec6a65
 ```
 
 The host runtime suite passes 62 tests. The final live test used the camera7
