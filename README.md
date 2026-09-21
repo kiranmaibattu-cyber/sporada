@@ -42,6 +42,17 @@ Local image:
 localhost/sporada:intel-285h-2026.09.21-v14
 ```
 
+Registry image:
+
+```text
+ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14
+ghcr.io/kiranmaibattu-cyber/sporada@sha256:79fefb7aca68807fc4b660bfaeb2eaa875f182397d82898924eb6749967b15ad
+```
+
+The corresponding Intel runtime base is
+`ghcr.io/kiranmaibattu-cyber/sporada-intel-runtime-base:intel-285h-2026.09.18-v2`.
+See `RELEASE.md` for immutable image references and verification results.
+
 ## Test
 
 ```bash

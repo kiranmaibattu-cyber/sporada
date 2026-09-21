@@ -11,6 +11,7 @@ identifier used in desired state, events, contracts, and the runtime graph.
 - Build script: `scripts/build_sporada_v14_image.sh`
 - Live acceptance test: `scripts/test_sporada_v14_face_delivery_live.py`
 - Published image: `ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14`
+- Immutable image: `ghcr.io/kiranmaibattu-cyber/sporada@sha256:79fefb7aca68807fc4b660bfaeb2eaa875f182397d82898924eb6749967b15ad`
 
 The runtime directory is a product-owned snapshot. The v14 Dockerfile no
 longer reads application code from the older shared

@@ -44,15 +44,16 @@ Published image:
 
 ```text
 ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14
+ghcr.io/kiranmaibattu-cyber/sporada@sha256:79fefb7aca68807fc4b660bfaeb2eaa875f182397d82898924eb6749967b15ad
 ```
 
 The host runtime suite passes 60 tests. The final live test used the camera7
 RTSP source and the actual image entrypoint with Intel GPU face detection and
-NPU embedding. The published build accepted a 7,255-byte face crop, simulated an embedding
-service outage, restarted the container, and resumed the same sample at the
-embedding stage. The artifact was uploaded exactly once, the final vector had
-512 dimensions, and no SSE client was connected. Evidence is retained under
-The repeatable harness is
+NPU embedding. The independently rebuilt Sporada image accepted a 6,812-byte
+face crop, simulated an embedding service outage, restarted the container, and
+resumed the same sample at the embedding stage. The artifact was uploaded
+exactly once, the final vector had 512 dimensions, and no SSE client was
+connected. The repeatable harness is
 `scripts/test_sporada_v14_face_delivery_live.py`.
 
 The production image intentionally excludes test-only `pytest`; tests run from
