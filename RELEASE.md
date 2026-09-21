@@ -12,7 +12,7 @@ Workload:
 
 ```text
 ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14
-ghcr.io/kiranmaibattu-cyber/sporada@sha256:79fefb7aca68807fc4b660bfaeb2eaa875f182397d82898924eb6749967b15ad
+ghcr.io/kiranmaibattu-cyber/sporada@sha256:292645ce6e7faa562e4fedbdb75f94ff9c1244fd175d07723dfa453199b82b86
 ```
 
 Intel runtime base v2:
@@ -45,6 +45,40 @@ build inputs; they are not separate running containers.
   sample resumed at embedding delivery without re-uploading its acknowledged
   6,812-byte crop; the submitted embedding contained 512 dimensions.
 - No SSE client was connected, proving identity delivery is independent of SSE.
+
+## Local Detector Refresh
+
+The working v14 source replaces the original person/vehicle detector with the
+supplied INT8 YOLO26n OpenVINO IR pair. It preserves the 640x640 input, baked-NMS
+`[1,300,6]` output, and COCO class IDs used by the existing runtime. This changes
+the workload image digest; the immutable registry digest above continues to
+identify the originally published v14 image until the refreshed image is
+explicitly published and this release record is updated.
+
+```text
+vehicle.xml sha256: 331ab903364648ea2be9624c1830b5fabdaf4cfee6f142388695513261d459ef
+vehicle.bin sha256: 7f5837c6070210fea9b62faac58c641185a2e94c5b29218d6f67db253387d93f
+```
+
+Refreshed local workload image:
+
+```text
+localhost/sporada:intel-285h-2026.09.21-v14
+image ID: sha256:8417ab451c7914477fd9fe0b609f2236f235c692d63bba76ee0b170f197dab51
+local digest: sha256:292645ce6e7faa562e4fedbdb75f94ff9c1244fd175d07723dfa453199b82b86
+```
+
+The refreshed source suite passes 62 tests. Direct inference compiled the new
+model on `GPU.0`. The ch9 live acceptance test exercised person detection into
+face processing and delivered a crop plus a 512-dimensional embedding across a
+container restart. A retained traffic frame produced truck, car, and pedestrian
+detections on `GPU.0`. A new live vehicle-event run could not complete because
+the `traffic1` RTSP endpoint changed from reachable to HTTP/RTSP 404 during the
+test; the runtime kept running and restarted only the failed camera process.
+The final ch9 acknowledgement test also verified that successful central crop
+and embedding delivery removes the outbox record while preserving the local
+event-linked face crop under bounded snapshot retention; the crop remained
+byte-identical and retrievable from `/snapshots` after container restart.
 
 ## Package Visibility
 

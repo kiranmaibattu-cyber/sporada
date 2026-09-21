@@ -46,7 +46,7 @@ Registry image:
 
 ```text
 ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14
-ghcr.io/kiranmaibattu-cyber/sporada@sha256:79fefb7aca68807fc4b660bfaeb2eaa875f182397d82898924eb6749967b15ad
+ghcr.io/kiranmaibattu-cyber/sporada@sha256:292645ce6e7faa562e4fedbdb75f94ff9c1244fd175d07723dfa453199b82b86
 ```
 
 The corresponding Intel runtime base is

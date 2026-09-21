@@ -11,7 +11,7 @@ identifier used in desired state, events, contracts, and the runtime graph.
 - Build script: `scripts/build_sporada_v14_image.sh`
 - Live acceptance test: `scripts/test_sporada_v14_face_delivery_live.py`
 - Published image: `ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14`
-- Immutable image: `ghcr.io/kiranmaibattu-cyber/sporada@sha256:79fefb7aca68807fc4b660bfaeb2eaa875f182397d82898924eb6749967b15ad`
+- Immutable image: `ghcr.io/kiranmaibattu-cyber/sporada@sha256:292645ce6e7faa562e4fedbdb75f94ff9c1244fd175d07723dfa453199b82b86`
 
 The runtime directory is a product-owned snapshot. The v14 Dockerfile no
 longer reads application code from the older shared
@@ -19,7 +19,10 @@ longer reads application code from the older shared
 
 ## Shared versioned dependencies
 
-- `models/sporada-secure-v14/openvino/`: vehicle, plate, OCR, and smoke/fire models.
+- `models/sporada-secure-v14/openvino/`: INT8 YOLO26n person/vehicle detector,
+  plate detector, OCR, and smoke/fire models. The person/vehicle model runs on
+  the Intel GPU and retains the v14 `[1,3,640,640] -> [1,300,6]` detector
+  contract.
 - `models/sporada-secure-v14/face/openvino/`: face detector and embedding models.
 - `sporada-intel-runtime-base:intel-285h-2026.09.18-v2`: Ubuntu,
   Intel GPU/NPU userspace, FFmpeg, Python, and OpenVINO dependencies.
@@ -34,3 +37,8 @@ repository.
 - `/run/secrets/apexfabric`: camera `.url` Secrets.
 - `/state`: persistent events, snapshots, metrics, and face-delivery outbox.
 - `/dev/dri` and `/dev/accel`: Intel GPU and NPU devices.
+
+Successfully delivered face crops remain under `/state/snapshots` so SSE event
+URLs continue to resolve. They are telemetry copies governed by the common
+24-hour, 6-8 GiB snapshot-retention policy; management owns the durable biometric
+artifact delivered before the embedding.
