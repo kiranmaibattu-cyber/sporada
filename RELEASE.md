@@ -1,52 +1,51 @@
-# Sporada Secure v16 Release
+# Sporada Secure v17 Candidate
 
-Release date: 2026-09-22
+Build date: 2026-09-22
 
 Hardware profile: Intel Core Ultra 285H (`linux/amd64`)
 
-## OCI Image
+## Local OCI Image
 
 ```text
-ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.22-v16
-ghcr.io/kiranmaibattu-cyber/sporada@sha256:cdc0af6f25c961676770f6fd5b028a1d7dce9ae0e3951a22baa4e2a61b540a29
+localhost/sporada:intel-285h-2026.09.22-v17
+sha256:33c39fa24d7b8d9d13dc937a15db315e71054ffb9da40d73f4c323d312eb11d4
 ```
 
-Local image ID:
-`sha256:200846ba2950689484f60b51e0bccabbe6a124b2bb7b6dc04543bb6b5dc37bf5`.
-The workload is built on
-`sporada-intel-runtime-base:intel-285h-2026.09.18-v2`; the base is not a separate
-running container.
+The image reuses `sporada-intel-runtime-base:intel-285h-2026.09.18-v2` and the
+unchanged baked OpenVINO models. It has not yet been archived or published.
 
-The checksum-verified offline archive is stored locally at
-`/home/admin1/Documents/PIPELINE/latest-images-20260922/sporada-intel-285h-2026.09.22-v16.tar`
-with SHA-256
-`961e9246fa983bec1329af75fbee2551c78fbaf0828e353080c181e592c108d5`.
+## V17 Contract Changes
 
-The repository is public. GitHub created the `sporada` container package as
-private and rejects package-visibility changes through the available API. Make
-it public from:
-`https://github.com/users/kiranmaibattu-cyber/packages/container/package/sporada/settings`.
-
-## Changes
-
-- Added `vehicle_entry_exit_counts` while preserving occupancy counting.
-- Preserved live desired-state application changes without container restart.
-- Added cross-class vehicle detection deduplication before tracking.
-- Added plate size, shape, sharpness, detector-confidence, OCR-confidence, and
-  temporal-consensus gates without changing the public event schema.
-- Face and plate model inputs are cropped from the original decoded frame after
-  detector coordinates are mapped back from letterboxed model coordinates.
-- Preserved durable anonymous face crop/embedding delivery and the published
-  v16 desired-state, event, face, and crossing contracts.
+- Management no longer supplies `vehicle_classes` for entry/exit lines.
+- CV owns the internal detector-class policy and reports the resulting bounded
+  string in `vehicle.class`.
+- `vehicle_entry_exit_crossed` is explicitly durable-only and suppressed from
+  SSE to prevent duplicate ingestion.
+- Crossing JSON and evidence are persisted before submission, retried with the
+  same event ID, and deleted only after a matching Management acknowledgement.
+- Added outbox-depth, acknowledgement, submission-failure, and accidental-SSE
+  suppression metrics.
+- Enforced 15-second upload timeout, contract retry statuses, exponential
+  jittered backoff, and evidence/request size limits.
 
 ## Verification
 
-- 75 source and contract tests passed.
-- Live Intel VA-API decode and GPU/NPU execution ran at approximately 8
-  inference FPS on the gate camera.
-- Recorded traffic comparison kept vehicle counting active while suppressing
-  unreliable OCR reads from tiny plate candidates.
-- No clearly readable plate crossed the verification segment, so this test does
-  not claim positive ANPR accuracy.
+- `80` source and contract tests pass in both repositories.
+- All bundled v17 schemas and examples validate.
+- The final canonical-image test used `rtsp://192.168.1.95:8554/traffic1` and
+  received five schema-valid crossings through authenticated multipart upload.
+- Every received crossing was acknowledged, the durable outbox drained to zero,
+  and no crossing was duplicated into SSE.
+- Earlier runs observed both `in` and `out` directions and car, truck, bus, and
+  motorcycle class outputs.
+- A combined live traffic run produced 346 vehicle-count events, 346 pedestrian
+  count events, and one ANPR event with retrievable evidence.
+- A live face run delivered a crop and 512-dimensional embedding, emitted a
+  schema-valid `face_seen` SSE event without a raw vector, and recovered a
+  pending transaction after restart.
+- A positive HTTP fire stream produced nine schema-valid fire/smoke events with
+  retrievable evidence. A different low-resolution flame clip produced no
+  alert, so this is functional coverage rather than an accuracy claim.
 
-Historical v14 release details remain in `RELEASE_V14.md`.
+Test artifacts are under ignored `run/sporada-v17-crossing-*` directories.
+Published v16 details remain in `RELEASE_V16.md`.

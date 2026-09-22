@@ -1,7 +1,7 @@
 # Sporada Secure
 
 Self-contained Intel 285H edge runtime for the `sporada-secure` solution pack.
-The current v16 release includes application source, baked OpenVINO models,
+The current v17 candidate includes application source, baked OpenVINO models,
 contracts, schemas, Podman build inputs, and acceptance tests.
 
 ## Applications
@@ -19,33 +19,29 @@ management-server responsibilities.
 ## Repository Layout
 
 ```text
-edge_runtime/solution_packs/sporada_secure/runtime_v16/  application source
+edge_runtime/solution_packs/sporada_secure/runtime_v17/  application source
 models/sporada-secure-v14/                              unchanged baked models
-delivery/apexfabric-v1/intel-285h/sporada-secure-v16/   contracts and schemas
-docker/Dockerfile.sporada-v16                           workload build
-scripts/build_sporada_v16_image.sh                      Podman build
+delivery/apexfabric-v1/intel-285h/sporada-secure-v17/   contracts and schemas
+docker/Dockerfile.sporada-v17                           workload build
+scripts/build_sporada_v17_image.sh                      Podman build
 ```
 
 ## Build And Test
 
 ```bash
-scripts/build_sporada_v16_image.sh
-cd edge_runtime/solution_packs/sporada_secure/runtime_v16
+scripts/build_sporada_v17_image.sh
+cd edge_runtime/solution_packs/sporada_secure/runtime_v17
 PYTHONPATH="$PWD" pytest -q tests
 ```
 
 Local image:
 
 ```text
-localhost/sporada:intel-285h-2026.09.22-v16
+localhost/sporada:intel-285h-2026.09.22-v17
 ```
 
-Registry image:
-
-```text
-ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.22-v16
-ghcr.io/kiranmaibattu-cyber/sporada@sha256:cdc0af6f25c961676770f6fd5b028a1d7dce9ae0e3951a22baa4e2a61b540a29
-```
+V17 is currently a local verified candidate and has not yet been published.
+The immutable v16 registry reference remains documented in `RELEASE_V16.md`.
 
 The workload uses the stable
 `sporada-intel-runtime-base:intel-285h-2026.09.18-v2` layer. It is one running
