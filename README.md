@@ -1,7 +1,7 @@
 # Sporada Secure
 
 Self-contained Intel 285H edge runtime for the `sporada-secure` solution pack.
-The current v17 candidate includes application source, baked OpenVINO models,
+The current v17 release includes application source, baked OpenVINO models,
 contracts, schemas, Podman build inputs, and acceptance tests.
 
 ## Applications
@@ -40,7 +40,8 @@ Local image:
 localhost/sporada:intel-285h-2026.09.22-v17
 ```
 
-V17 is currently a local verified candidate and has not yet been published.
+V17 is published as
+`ghcr.io/kiranmaibattu-cyber/sporada@sha256:8d5e0d3d9297cd60aa0d95eb34ab2f644901a5d49a18eaa56b7e0d3f3e4ba8a9`.
 The immutable v16 registry reference remains documented in `RELEASE_V16.md`.
 
 The workload uses the stable

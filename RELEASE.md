@@ -1,18 +1,25 @@
-# Sporada Secure v17 Candidate
+# Sporada Secure v17
 
 Build date: 2026-09-22
 
 Hardware profile: Intel Core Ultra 285H (`linux/amd64`)
 
-## Local OCI Image
+## OCI Image
 
 ```text
 localhost/sporada:intel-285h-2026.09.22-v17
 sha256:33c39fa24d7b8d9d13dc937a15db315e71054ffb9da40d73f4c323d312eb11d4
+ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.22-v17
+ghcr.io/kiranmaibattu-cyber/sporada@sha256:8d5e0d3d9297cd60aa0d95eb34ab2f644901a5d49a18eaa56b7e0d3f3e4ba8a9
 ```
 
 The image reuses `sporada-intel-runtime-base:intel-285h-2026.09.18-v2` and the
-unchanged baked OpenVINO models. It has not yet been archived or published.
+unchanged baked OpenVINO models. The GHCR package is anonymously readable.
+
+The checksum-verified offline archive is stored at
+`/home/admin1/Documents/PIPELINE/latest-images-20260922/sporada-intel-285h-2026.09.22-v17.tar`.
+Its SHA-256 is
+`9372e1cb5f3cda6bd7531dabc0c66075df5b04090e380c839d20b939a45d09f1`.
 
 ## V17 Contract Changes
 
