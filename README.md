@@ -1,71 +1,56 @@
 # Sporada Secure
 
 Self-contained Intel 285H edge runtime for the `sporada-secure` solution pack.
-It includes the v14 application source, OpenVINO models, contracts, schemas,
-Docker build inputs, and acceptance tests.
+The current v16 release includes application source, baked OpenVINO models,
+contracts, schemas, Podman build inputs, and acceptance tests.
 
 ## Applications
 
 - ANPR
-- Vehicle counting
+- Vehicle occupancy counting
+- Vehicle line-crossing entry/exit counts
 - Pedestrian counting
 - Fire and smoke detection
-- Anonymous face observations with durable crop-first delivery
+- Anonymous face samples with durable crop-first delivery
 
-Persistent identity, enrollment, clustering, recognition, naming, and search
-are management-server responsibilities. The edge sends authenticated face crop
-artifacts followed by compatible 512-dimensional embeddings.
+Persistent identity, enrollment, recognition, naming, and search remain
+management-server responsibilities.
 
-## Repository layout
+## Repository Layout
 
 ```text
-edge_runtime/solution_packs/sporada_secure/runtime_v14/  application source
-models/sporada-secure-v14/                              baked model files
-delivery/apexfabric-v1/intel-285h/sporada-secure-v14/   contracts and schemas
-docker/                                                  base/workload images
-scripts/                                                 build and live tests
-docs/                                                    architecture notes
+edge_runtime/solution_packs/sporada_secure/runtime_v16/  application source
+models/sporada-secure-v14/                              unchanged baked models
+delivery/apexfabric-v1/intel-285h/sporada-secure-v16/   contracts and schemas
+docker/Dockerfile.sporada-v16                           workload build
+scripts/build_sporada_v16_image.sh                      Podman build
 ```
 
-## Build
-
-Podman is required. On a fresh system the script builds both Intel runtime base
-layers and then the workload image:
+## Build And Test
 
 ```bash
-scripts/build_sporada_v14_image.sh
+scripts/build_sporada_v16_image.sh
+cd edge_runtime/solution_packs/sporada_secure/runtime_v16
+PYTHONPATH="$PWD" pytest -q tests
 ```
 
 Local image:
 
 ```text
-localhost/sporada:intel-285h-2026.09.21-v14
+localhost/sporada:intel-285h-2026.09.22-v16
 ```
 
 Registry image:
 
 ```text
-ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.21-v14
-ghcr.io/kiranmaibattu-cyber/sporada@sha256:66db0d8ec2216cb04e303b330d01f2295645cc333f9b5c5364d14aed61ec6a65
+ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.22-v16
 ```
 
-The corresponding Intel runtime base is
-`ghcr.io/kiranmaibattu-cyber/sporada-intel-runtime-base:intel-285h-2026.09.18-v2`.
-See `RELEASE.md` for immutable image references and verification results.
+The workload uses the stable
+`sporada-intel-runtime-base:intel-285h-2026.09.18-v2` layer. It is one running
+container; the base is an OCI build/cache boundary, not a sidecar.
 
-## Test
-
-```bash
-cd edge_runtime/solution_packs/sporada_secure/runtime_v14
-PYTHONPATH="$PWD" pytest -q tests
-```
-
-The hardware/live acceptance test requires `/dev/dri`, `/dev/accel`, the test
-camera network, and Podman:
-
-```bash
-python3 scripts/test_sporada_v14_face_delivery_live.py
-```
-
-See `docs/SPORADA_SECURE.md` and the versioned delivery contract for deployment
-mounts, APIs, event behavior, privacy boundaries, and verified behavior.
+Deployment mounts remain `/configs`, `/run/secrets/apexfabric`, and persistent
+`/state`, with `/dev/dri` and `/dev/accel` passed through for Intel GPU/NPU use.
+See `RELEASE.md` and the versioned delivery contract for exact behavior and
+immutable registry references.
