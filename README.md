@@ -44,6 +44,7 @@ Registry image:
 
 ```text
 ghcr.io/kiranmaibattu-cyber/sporada:intel-285h-2026.09.22-v16
+ghcr.io/kiranmaibattu-cyber/sporada@sha256:cdc0af6f25c961676770f6fd5b028a1d7dce9ae0e3951a22baa4e2a61b540a29
 ```
 
 The workload uses the stable
