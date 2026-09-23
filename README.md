@@ -1,8 +1,10 @@
 # Sporada Secure
 
 Self-contained Intel 285H edge runtime for the `sporada-secure` solution pack.
-The current v17 release includes application source, baked OpenVINO models,
-contracts, schemas, Podman build inputs, and acceptance tests.
+The published v17 release includes application source, baked OpenVINO models,
+contracts, schemas, Podman build inputs, and acceptance tests. A local v18
+candidate adds bounded best-face selection without changing the models or the
+management upload schemas.
 
 ## Applications
 
@@ -52,3 +54,10 @@ Deployment mounts remain `/configs`, `/run/secrets/apexfabric`, and persistent
 `/state`, with `/dev/dri` and `/dev/accel` passed through for Intel GPU/NPU use.
 See `RELEASE.md` and the versioned delivery contract for exact behavior and
 immutable registry references.
+
+## V18 Candidate
+
+V18 keeps `minimum_quality` as the fallback floor and adds optional
+`preferred_quality` and `selection_window_seconds`. It emits a preferred sample
+immediately or the best usable sample when the window expires. See
+`RELEASE_V18.md`; v17 remains the current published image.
