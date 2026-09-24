@@ -1,5 +1,10 @@
 # Sporada Secure v18 six-application contract
 
+The current v18 image uses the baked `yolo26n-coco-openvino-fp16` OpenVINO IR
+for vehicle and person detection on the Intel iGPU. It retains the existing
+desired-state, event, endpoint, and class-ID contracts. Exact checksums are
+declared in `image-contract.yaml`.
+
 CV-team entry point: [`CV-PIPELINE-HANDOFF.md`](CV-PIPELINE-HANDOFF.md).
 
 This revision removes detector-class selection from Management configuration. It preserves zone-based

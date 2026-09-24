@@ -3,7 +3,8 @@
 Self-contained Intel 285H edge runtime for the `sporada-secure` solution pack.
 The published v18 release includes application source, baked OpenVINO models,
 contracts, schemas, Podman build inputs, and acceptance tests. It adds bounded
-best-face selection without changing the models or management upload schemas.
+best-face selection and uses the YOLO26n FP16 vehicle/person detector without
+changing the management schemas.
 
 ## Applications
 
@@ -21,7 +22,8 @@ management-server responsibilities.
 
 ```text
 edge_runtime/solution_packs/sporada_secure/runtime_v18/  application source
-models/sporada-secure-v14/                              unchanged baked models
+models/sporada-secure-v14/                              shared plate/OCR/smoke/face models
+models/sporada-secure-v18/                              FP16 vehicle/person detector
 delivery/apexfabric-v1/intel-285h/sporada-secure-v18/   contracts and schemas
 docker/Dockerfile.sporada-v18                           workload build
 scripts/build_sporada_v18_image.sh                      Podman build
@@ -42,7 +44,7 @@ localhost/sporada:intel-285h-2026.09.23-v18
 ```
 
 V18 is published as
-`ghcr.io/kiranmaibattu-cyber/sporada@sha256:c8a3527560968a6606c1e3f5acaabc1a2cec28515104eeed0569e53d0e949b76`.
+`ghcr.io/kiranmaibattu-cyber/sporada@sha256:102b3d6100d11fd345608cd720ccc3ecc806d7168713c28c51d0c824f51f28b8`.
 The immutable v17 registry reference remains documented in `RELEASE_V17.md`.
 
 The workload uses the stable
