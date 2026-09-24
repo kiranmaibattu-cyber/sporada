@@ -44,7 +44,7 @@ localhost/sporada:intel-285h-2026.09.23-v18
 ```
 
 V18 is published as
-`ghcr.io/kiranmaibattu-cyber/sporada@sha256:102b3d6100d11fd345608cd720ccc3ecc806d7168713c28c51d0c824f51f28b8`.
+`ghcr.io/kiranmaibattu-cyber/sporada@sha256:f798a932cdf76cc711cdef7455218ba38ee501ff1bb13c7df78009033cbddddf`.
 The immutable v17 registry reference remains documented in `RELEASE_V17.md`.
 
 The workload uses the stable
